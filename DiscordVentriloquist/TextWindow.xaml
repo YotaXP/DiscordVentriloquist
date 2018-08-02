@@ -1,0 +1,17 @@
+﻿<Window x:Class="DiscordVentriloquist.TextWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DiscordVentriloquist"
+        mc:Ignorable="d"
+        Height="200" Width="400" WindowStyle="ToolWindow" WindowStartupLocation="CenterOwner">
+    <Grid>
+        <TextBox x:Name="MainTextbox" Margin="10,10,10,34.96" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"/>
+        <StackPanel Margin="10,0,10,10" VerticalAlignment="Bottom" Orientation="Horizontal" FlowDirection="RightToLeft">
+            <Button x:Name="CancelButton" Content="Cancel" Margin="0,0,10,0" Width="70" IsCancel="True" Click="CancelClicked" Focusable="False"/>
+            <Button x:Name="OkButton" Content="OK" Margin="0,0,10,0" Width="70" IsDefault="True" Click="OkClicked" Focusable="False"/>
+            <Button x:Name="CopyButton" Content="Copy" Margin="0,0,10,0" Width="70" IsDefault="True" Click="CopyClicked" Focusable="False"/>
+        </StackPanel>
+    </Grid>
+</Window>

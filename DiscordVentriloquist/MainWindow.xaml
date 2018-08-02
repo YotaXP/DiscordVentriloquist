@@ -1,12 +1,113 @@
-﻿<Window x:Class="DiscordVentriloquist.MainWindow"
+﻿<Window
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:x9="http://schemas.microsoft.com/winfx/2009/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DiscordVentriloquist"
+        xmlns:vm="clr-namespace:DiscordVentriloquist.ViewModels"
+        xmlns:Controls="clr-namespace:DiscordVentriloquist.Controls" x:Class="DiscordVentriloquist.MainWindow"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Discord Ventriloquist" Height="600" Width="400" d:DataContext="{Binding Source={StaticResource SampleDataSource}}" Icon="Resources/discordPink.png">
+    <Window.Resources>
+        <Controls:ImageUrlTypeConverter x:Key="ImageSourceConverter" />
+        <DataTemplate x:Key="CharacterListItemTemplate">
+            <Grid Margin="3">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition SharedSizeGroup="Item" />
+                </Grid.ColumnDefinitions>
+                <StackPanel>
+                    <Image Margin="0" HorizontalAlignment="Center" Width="64" Height="64" Stretch="UniformToFill" Source="{Binding AvatarUrl, Converter={StaticResource ImageSourceConverter}}" RenderOptions.BitmapScalingMode="Fant">
+                        <Image.Clip>
+                            <EllipseGeometry RadiusX="32" RadiusY="32" Center="32,32" />
+                        </Image.Clip>
+                    </Image>
+                    <TextBlock Text="{Binding Name}" Margin="0" HorizontalAlignment="Center" />
+                </StackPanel>
+            </Grid>
+        </DataTemplate>
+        <ItemsPanelTemplate x:Key="CharacterListItemPanel">
+            <WrapPanel IsItemsHost="True" Grid.IsSharedSizeScope="True" />
+        </ItemsPanelTemplate>
+    </Window.Resources>
+    <Window.DataContext>
+        <vm:MainVM />
+    </Window.DataContext>
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="6"/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="6"/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+
+        <Menu>
+            <MenuItem Header="Save to Text..." Command="{Binding SaveToTextCommand}" />
+            <MenuItem Header="Load from Text..." Command="{Binding LoadFromTextCommand}" />
+        </Menu>
+
+        <GroupBox Header="Webhooks" Grid.Row="1" Margin="3">
+            <DockPanel>
+                <Grid DockPanel.Dock="Bottom">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="100"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Label Content="Name:" />
+                    <TextBox Text="{Binding SelectedItem.Name, ElementName=WebhookList}" Grid.Column="1" Margin=" 3" />
+                    <Label Content="URL:" Grid.Row="1" />
+                    <TextBox Text="{Binding SelectedItem.URL, ElementName=WebhookList}" Grid.Column="1" Grid.Row="1" Margin="3" />
+
+                    <Rectangle Grid.Column="2" Grid.RowSpan="2" Fill="Black" Width="1" HorizontalAlignment="Left" />
+                    <Button Content="Add New" Command="{Binding AddWebhookCommand}" Grid.Column="3" Margin="4 3 3 3" />
+                    <Button Content="Remove" Command="{Binding RemoveWebhookCommand}" Grid.Column="3" Grid.Row="1" Margin="4 3 3 3" />
+                </Grid>
+                <Controls:DragAndDropListBoxWebhooks ItemsSource="{Binding Webhooks}" SelectedItem="{Binding SelectedWebhook}" DisplayMemberPath="Name" Margin="3" x:Name="WebhookList" />
+            </DockPanel>
+        </GroupBox>
+
+        <GridSplitter Grid.Row="2" ResizeBehavior="PreviousAndNext" HorizontalAlignment="Stretch" />
+
+        <GroupBox Header="Characters" Grid.Row="3" Margin="3">
+            <DockPanel>
+                <Grid DockPanel.Dock="Bottom">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="100"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Label Content="Name:" />
+                    <TextBox Text="{Binding SelectedItem.Name, ElementName=CharacterList}" Grid.Column="1" Margin=" 3"/>
+                    <Label Content="Avatar URL:" Grid.Row="1" />
+                    <TextBox Text="{Binding SelectedItem.AvatarUrl, ElementName=CharacterList}" Grid.Column="1" Grid.Row="1" Margin="3"/>
+
+                    <Rectangle Grid.Column="2" Grid.RowSpan="2" Fill="Black" Width="1" HorizontalAlignment="Left" />
+                    <Button Content="Add New" Command="{Binding AddCharacterCommand}" Grid.Column="3" Margin="4 3 3 3" />
+                    <Button Content="Remove" Command="{Binding RemoveCharacterCommand}"  Grid.Column="3" Grid.Row="1" Margin="4 3 3 3" />
+                </Grid>
+
+                <Controls:DragAndDropListBoxCharacters ItemsSource="{Binding Characters}" SelectedItem="{Binding SelectedCharacter}" x:Name="CharacterList" ItemTemplate="{DynamicResource CharacterListItemTemplate}" ItemsPanel="{DynamicResource CharacterListItemPanel}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Margin="3" />
+            </DockPanel>
+        </GroupBox>
+
+        <GridSplitter Grid.Row="4" ResizeBehavior="PreviousAndNext" HorizontalAlignment="Stretch" />
         
+        <DockPanel Grid.Row="5" Margin="3">
+            <Button Command="{Binding SendCommand}" IsEnabled="{Binding CanSend}" Content="Send" Width="75" IsDefault="True" DockPanel.Dock="Right" Margin="3" />
+            <TextBox Text="{Binding Message, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding CanSend}" Margin="3" SpellCheck.IsEnabled="True" KeyDown="MessageBoxKeyDown" VerticalScrollBarVisibility="Visible" />
+        </DockPanel>
+
+
     </Grid>
 </Window>

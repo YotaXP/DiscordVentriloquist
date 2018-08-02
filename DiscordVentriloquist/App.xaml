@@ -1,9 +1,7 @@
-﻿<Application x:Class="DiscordVentriloquist.App"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:DiscordVentriloquist"
-             StartupUri="MainWindow.xaml">
+<Application xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:local="clr-namespace:DiscordVentriloquist" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:d1p1="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:SampleDataSource="clr-namespace:Expression.Blend.SampleData.SampleDataSource" x:Class="DiscordVentriloquist.App" StartupUri="MainWindow.xaml" d1p1:Ignorable="d">
     <Application.Resources>
-         
+        <ResourceDictionary>
+            <SampleDataSource:SampleDataSource x:Key="SampleDataSource" d:IsDataSource="True"/>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>
