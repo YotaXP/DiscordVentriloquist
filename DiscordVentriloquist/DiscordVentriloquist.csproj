@@ -34,7 +34,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <SignAssembly>true</SignAssembly>
+    <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
     <AssemblyOriginatorKeyFile>YotaXP.pfx</AssemblyOriginatorKeyFile>
@@ -142,7 +142,7 @@
     <Analyzer Include="..\packages\WpfAnalyzers.2.1.4.0\analyzers\dotnet\cs\WpfAnalyzers.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\discordPink.png" />
+    <Resource Include="Resources\discordGroucho.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

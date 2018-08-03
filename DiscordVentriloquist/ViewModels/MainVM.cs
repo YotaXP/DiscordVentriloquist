@@ -1,6 +1,5 @@
 ﻿using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Net;
@@ -16,19 +15,6 @@ namespace DiscordVentriloquist.ViewModels
     public class MainVM : BindableBase
     {
         public MainVM() {
-            //Webhooks.Add(new WebhookInfo() {
-            //    Name = "Test",
-            //    URL = new Uri("https://webhook.site/428ca1d4-678a-47b6-9c56-405bce06543c")
-            //});
-            //Webhooks.Add(new WebhookInfo() {
-            //    Name = "Discord",
-            //    URL = new Uri("https://discordapp.com/api/webhooks/474311499070832646/7oFn0uIET74o7JyrtRuGzpswQ0fDiMF45Nh4DyHTYcPPSyQopiUeUSpdzQ_KUSC8eQvX")
-            //});
-            //Characters.Add(new CharacterInfo() {
-            //    Name = "Vvevv",
-            //    AvatarUrl = new Uri("https://cdn.discordapp.com/attachments/122936228877303810/473616229572018186/unknown.png")
-            //});
-
             SendCommand = new RelayCommand(OnSend);
             AddWebhookCommand = new RelayCommand(OnAddWebhook);
             AddCharacterCommand = new RelayCommand(OnAddCharacter);
@@ -236,7 +222,7 @@ namespace DiscordVentriloquist.ViewModels
         private void OnAddCharacter(object sender) {
             Characters.Add(SelectedCharacter = new CharacterInfo() {
                 Name = "New Character",
-                AvatarUrl = new Uri("https://i.imgur.com/HC7aBeb.png")
+                AvatarUrl = new Uri("https://i.imgur.com/YhNp58b.png")
             });
         }
 

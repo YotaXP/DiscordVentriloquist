@@ -8,7 +8,7 @@
         xmlns:vm="clr-namespace:DiscordVentriloquist.ViewModels"
         xmlns:Controls="clr-namespace:DiscordVentriloquist.Controls" x:Class="DiscordVentriloquist.MainWindow"
         mc:Ignorable="d"
-        Title="Discord Ventriloquist" Height="600" Width="400" d:DataContext="{Binding Source={StaticResource SampleDataSource}}" Icon="Resources/discordPink.png">
+        Title="Discord Ventriloquist" Height="600" Width="400" d:DataContext="{Binding Source={StaticResource SampleDataSource}}" Icon="Resources/discordGroucho.png">
     <Window.Resources>
         <Controls:ImageUrlTypeConverter x:Key="ImageSourceConverter" />
         <DataTemplate x:Key="CharacterListItemTemplate">
