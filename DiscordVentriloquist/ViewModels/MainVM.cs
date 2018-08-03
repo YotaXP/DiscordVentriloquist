@@ -32,8 +32,8 @@ namespace DiscordVentriloquist.ViewModels
             SendCommand = new RelayCommand(OnSend);
             AddWebhookCommand = new RelayCommand(OnAddWebhook);
             AddCharacterCommand = new RelayCommand(OnAddCharacter);
-            RemoveWebhookCommand = new RelayCommand(OnRemoveWebhook, CanRemoveWebhook);
-            RemoveCharacterCommand = new RelayCommand(OnRemoveCharacter, CanRemoveCharacter);
+            RemoveWebhookCommand = new RelayCommand(OnRemoveWebhook);
+            RemoveCharacterCommand = new RelayCommand(OnRemoveCharacter);
             SaveToTextCommand = new RelayCommand(OnSaveToText);
             LoadFromTextCommand = new RelayCommand(OnLoadFromText);
         }
@@ -46,14 +46,23 @@ namespace DiscordVentriloquist.ViewModels
         private WebhookInfo _SelectedWebhook;
         public WebhookInfo SelectedWebhook {
             get => _SelectedWebhook;
-            set => SetProperty(ref _SelectedWebhook, value);
+            set {
+                SetProperty(ref _SelectedWebhook, value);
+                OnPropertyChanged(nameof(IsWebhookSelected));
+            }
         }
+        public bool IsWebhookSelected => SelectedWebhook != null;
+
 
         private CharacterInfo _SelectedCharacter;
         public CharacterInfo SelectedCharacter {
             get => _SelectedCharacter;
-            set => SetProperty(ref _SelectedCharacter, value);
+            set {
+                SetProperty(ref _SelectedCharacter, value);
+                OnPropertyChanged(nameof(IsCharacterSelected));
+            }
         }
+        public bool IsCharacterSelected => SelectedCharacter != null;
 
         private string _Message;
         public string Message {
@@ -207,13 +216,11 @@ namespace DiscordVentriloquist.ViewModels
         }
 
         public ICommand RemoveWebhookCommand { get; private set; }
-        private bool CanRemoveWebhook(object sender) => _SelectedWebhook != null;
         private void OnRemoveWebhook(object sender) {
             if (SelectedWebhook == null) return;
             Webhooks.Remove(SelectedWebhook);
         }
         public ICommand RemoveCharacterCommand { get; private set; }
-        private bool CanRemoveCharacter(object sender) => _SelectedCharacter != null;
         private void OnRemoveCharacter(object sender) {
             if (SelectedCharacter == null) return;
             Characters.Remove(SelectedCharacter);
